@@ -1,0 +1,9 @@
+# templete
+az deployment group create -n VM_Linux_Nginx -g WSB2022 \
+-f /Users/tubiszewskim/Documents/Azure/Wsb_2022/VM_Linux_Nginx/vm_linux_nginx.json \
+--what-if
+
+# bicep
+az deployment group create -n VM_Linux_Nginx -g WSB2022 \
+-f /Users/tubiszewskim/Documents/Azure/Wsb_2022/VM_Linux_Nginx/vm_linux_nginx.bicep \
+--what-if

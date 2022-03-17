@@ -1,27 +1,22 @@
-
-
 @description('Podaj nazwę konta storage')
 @minLength(3)
 @maxLength(23)
 param stgName string
 
 param location string = resourceGroup().location
+var storageName = toLower((stgName))
 
-var StorageName = toLower((stgName))
-
-resource storageAccount_res 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: StorageName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind:'StorageV2'
-  properties: {
-    accessTier: 'Hot'
-    minimumTlsVersion: 'TLS1_2'
+module storage 'storage.bicep' = {
+  name:'storageDeploy'
+  params: { 
+    location: location
+    stgName: storageName
   }
 }
 
-
-output storageName string = storageAccount_res.name
-output storageAccountId string = storageAccount_res.id
+module blob 'blob.bicep' = {
+  name:'blobDeploy'
+  params:{
+    sa: storage
+  }
+}
